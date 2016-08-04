@@ -44,4 +44,11 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
+- (void)getBuildNumber:(CDVInvokedUrlCommand*)command {
+   NSString* callbackId = command.callbackId;
+   NSString* build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+   CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:build];
+   [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
+}
+
 @end
