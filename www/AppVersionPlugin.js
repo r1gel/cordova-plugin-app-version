@@ -1,3 +1,4 @@
+cordova.define("cordova-plugin-app-version.AppVersionPlugin", function(require, exports, module) {
 /*jslint indent: 2 */
 /*global window, jQuery, angular, cordova */
 "use strict";
@@ -57,8 +58,6 @@ getAppVersion.getVersionCode = function (success, fail) {
   return getPromisedCordovaExec('getVersionCode', success, fail);
 };
 
-getAppVersion.getBuildNumber = function (success, fail) {
-  return getPromisedCordovaExec('getBuildNumber', success, fail);
-};
-
 module.exports = getAppVersion;
+
+});

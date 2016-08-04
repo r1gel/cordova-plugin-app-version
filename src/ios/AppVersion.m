@@ -23,6 +23,7 @@
 {
     NSString* callbackId = command.callbackId;
     NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString* build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
     if (version == nil) {
       NSLog(@"CFBundleShortVersionString was nil, attempting CFBundleVersion");
       version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
@@ -31,8 +32,8 @@
         // not calling error callback here to maintain backward compatibility
       }
     }
-
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:version];
+    NSString *result = [version stringByAppendingFormat:@".%@",build];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
@@ -42,13 +43,6 @@
     NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:version];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
-}
-
-- (void)getBuildNumber:(CDVInvokedUrlCommand*)command {
-   NSString* callbackId = command.callbackId;
-   NSString* build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
-   CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:build];
-   [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
 @end
